@@ -118,10 +118,11 @@ const engine = new Engine(GODOT_CONFIG);
 // index.pck is shipped in parts (file size limits on the host); fetch them all and hand the engine one buffer
 const PCK_PARTS = ["index.pck.part0", "index.pck.part1"];
 const PCK_SIZE = 64918652;
+const PCK_STAMP = 'dc30bd855c';
 function startSplit(override) {
 	const onProgress = override['onProgress'] || function () {};
 	let got = 0;
-	const loads = PCK_PARTS.map((name) => fetch(name).then((r) => {
+	const loads = PCK_PARTS.map((name) => fetch(name + '?v=' + PCK_STAMP).then((r) => {
 		if (!r.ok) {
 			throw new Error('Failed loading file: ' + name);
 		}
